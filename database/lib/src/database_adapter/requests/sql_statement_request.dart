@@ -18,7 +18,7 @@ import 'package:database/sql.dart';
 /// Describes a SQL statement that [DatabaseAdapter] should perform.
 class SqlStatementRequest extends Request<Future<SqlStatementResult>> {
   final SqlStatement sqlStatement;
-  final SqlTransaction sqlTransaction;
+  final SqlTransaction? sqlTransaction;
 
   SqlStatementRequest(this.sqlStatement, {this.sqlTransaction});
 

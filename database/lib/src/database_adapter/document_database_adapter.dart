@@ -28,12 +28,12 @@ abstract class DocumentDatabaseAdapter extends DatabaseAdapter {
   Future<void> performDocumentInsert(DocumentInsertRequest request) {
     return performDocumentTransaction(DocumentTransactionRequest(
       callback: (transaction) async {
-        final snapshot = await transaction.get(request.document);
+        final snapshot = await transaction.get(request.document!);
         if (snapshot.exists) {
-          throw DatabaseException.found(request.document);
+          throw DatabaseException.found(request.document!);
         }
         await transaction.upsert(
-          request.document,
+          request.document!,
           data: request.data,
         );
       },

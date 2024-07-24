@@ -22,7 +22,7 @@ part of database.sql;
 /// ```
 class SqlStatementResult {
   /// How many rows were affected.
-  final int affectedRows;
+  final int? affectedRows;
 
   SqlStatementResult({this.affectedRows});
 

@@ -65,9 +65,9 @@ class AndFilter extends Filter {
   @override
   Filter simplify() {
     final oldFilters = filters;
-    if (oldFilters.isEmpty) {
-      return null;
-    }
+    // if (oldFilters.isEmpty) {
+    //   return null;
+    // }
     if (oldFilters.length == 1) {
       return oldFilters.single.simplify();
     }
@@ -89,9 +89,9 @@ class AndFilter extends Filter {
       // Some other filter
       result.add(newFilter);
     }
-    if (result.isEmpty) {
-      return null;
-    }
+    // if (result.isEmpty) {
+    //   return null;
+    // }
     if (result.length == 1) {
       return result.single;
     }
@@ -177,9 +177,9 @@ class OrFilter extends Filter {
   @override
   Filter simplify() {
     final oldFilters = filters;
-    if (oldFilters.isEmpty) {
-      return null;
-    }
+    // if (oldFilters.isEmpty) {
+    //   return null;
+    // }
     if (oldFilters.length == 1) {
       return oldFilters.single.simplify();
     }
@@ -201,9 +201,9 @@ class OrFilter extends Filter {
       // Some other filter
       result.add(newFilter);
     }
-    if (result.isEmpty) {
-      return null;
-    }
+    // if (result.isEmpty) {
+    //   return null;
+    // }
     if (result.length == 1) {
       return result.single;
     }

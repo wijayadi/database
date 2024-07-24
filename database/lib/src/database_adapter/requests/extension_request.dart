@@ -20,7 +20,7 @@ abstract class DatabaseExtensionRequest<T extends DatabaseExtensionResponse>
     extends Request<Stream<T>> {
   @override
   Stream<T> delegateTo(DatabaseAdapter adapter) {
-    return adapter.performExtension(this);
+    return adapter.performExtension(this) as Stream<T>;
   }
 
   /// Called by a leaf adapter that doesn't support the request.

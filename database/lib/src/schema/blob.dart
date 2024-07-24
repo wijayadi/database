@@ -36,7 +36,7 @@ class BlobSchema extends PrimitiveSchema<Blob> {
   bool operator ==(other) => other is BlobSchema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitBlobSchema(this, context);
   }
 }

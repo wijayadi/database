@@ -25,7 +25,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   const JsonEncoder({this.supportSpecialDoubleValues = false});
 
   @override
-  Object visitBytesSchema(BytesSchema schema, Object argument) {
+  Object? visitBytesSchema(BytesSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -36,7 +36,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDateSchema(DateSchema schema, Object argument) {
+  Object? visitDateSchema(DateSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -47,7 +47,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDateTimeSchema(DateTimeSchema schema, Object argument) {
+  Object? visitDateTimeSchema(DateTimeSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -59,7 +59,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDocumentSchema(DocumentSchema schema, Object argument) {
+  Object? visitDocumentSchema(DocumentSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -72,7 +72,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDoubleSchema(DoubleSchema schema, Object argument) {
+  Object? visitDoubleSchema(DoubleSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -97,7 +97,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitGeoPointSchema(GeoPointSchema schema, Object argument) {
+  Object? visitGeoPointSchema(GeoPointSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -108,7 +108,7 @@ class JsonEncoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitInt64Schema(Int64Schema schema, Object argument) {
+  Object? visitInt64Schema(Int64Schema schema, Object argument) {
     if (argument == null) {
       return null;
     }

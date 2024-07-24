@@ -37,7 +37,7 @@ class Int64Schema extends PrimitiveSchema<Int64> {
   bool operator ==(other) => other is Int64Schema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitInt64Schema(this, context);
   }
 }
@@ -59,7 +59,7 @@ class IntSchema extends PrimitiveSchema<int> {
   bool operator ==(other) => other is IntSchema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitIntSchema(this, context);
   }
 }

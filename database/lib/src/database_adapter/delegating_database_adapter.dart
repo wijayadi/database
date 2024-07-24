@@ -35,12 +35,12 @@ class DelegatingDatabaseAdapter implements DatabaseAdapter {
   }
 
   @override
-  Future<void> performCheckConnection({Duration timeout}) {
+  Future<void> performCheckConnection({Duration? timeout}) {
     return _adapter.performCheckConnection(timeout: timeout);
   }
 
   @override
-  Future<void> performDocumentBatch(DocumentBatchRequest request) {
+  Future<DocumentBatchResponse> performDocumentBatch(DocumentBatchRequest request) {
     return request.delegateTo(_adapter);
   }
 

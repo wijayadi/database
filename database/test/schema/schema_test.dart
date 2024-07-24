@@ -575,7 +575,7 @@ void main() {
       );
 
       // Test that the result is immutable
-      final result = schema.selectTree([]);
+      final result = schema.selectTree([])!;
       expect(() => result.add(1), throwsUnsupportedError);
     });
 
@@ -804,7 +804,7 @@ void main() {
           'k1': StringSchema(),
         })
       });
-      final result = schema.selectTree({});
+      final result = schema.selectTree({})!;
       expect(() => result['k'] = 'v', throwsUnsupportedError);
     });
 
@@ -843,7 +843,7 @@ void main() {
       final schema = MapSchema({
         'k': BytesSchema(),
       });
-      final value = schema.encodeWith(jsonEncoder, {'k': null}) as Map;
+      final value = schema.encodeWith(jsonEncoder, {'k': null})!;
       expect(() => value['k'] = null, throwsUnsupportedError);
     });
 

@@ -17,14 +17,14 @@ part of database.sql;
 /// Identifies an SQL column.
 class SqlColumnDescription implements Comparable<SqlColumnDescription> {
   /// SQL table name.
-  final String tableName;
+  final String? tableName;
 
   /// SQL column name.
   final String columnName;
 
   SqlColumnDescription({
-    @required this.tableName,
-    @required this.columnName,
+    this.tableName,
+    required this.columnName,
   }) : assert(columnName != null);
 
   @override
@@ -48,7 +48,7 @@ class SqlColumnDescription implements Comparable<SqlColumnDescription> {
       if (other.tableName == null) {
         return 1;
       }
-      return tableName.compareTo(other.tableName);
+      return tableName!.compareTo(other.tableName!);
     }
     return columnName.compareTo(other.columnName);
   }
@@ -65,7 +65,7 @@ class SqlColumnDescription implements Comparable<SqlColumnDescription> {
 /// Identifies an SQL type such as LONG INT or VARCHAR(160).
 class SqlType {
   final String typeName;
-  final int length;
+  final int? length;
 
   const SqlType(this.typeName, {this.length});
 

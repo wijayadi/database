@@ -22,13 +22,13 @@ class DocumentSearchWatchRequest extends Request<Stream<QueryResult>> {
   final Collection collection;
   final Query query;
   final Reach reach;
-  final Duration pollingInterval;
-  Schema outputSchema;
+  final Duration? pollingInterval;
+  Schema? outputSchema;
 
   DocumentSearchWatchRequest({
-    @required this.collection,
-    @required this.query,
-    @required this.reach,
+    required this.collection,
+    required this.query,
+    required this.reach,
     this.pollingInterval,
     this.outputSchema,
   });

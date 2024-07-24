@@ -77,31 +77,31 @@ class BuiltValueSerializationConfig extends Mapper {
   BuiltValueSerializationConfig(this._serializers);
 
   @override
-  Object rawGraphFrom(
+  Object? rawGraphFrom(
     Object value, {
-    String typeName,
-    FullType specifiedType,
-    MapperEncodeContext context,
+    String? typeName,
+    FullType? specifiedType,
+    MapperEncodeContext? context,
   }) {
     if (specifiedType == null && typeName != null) {
       final serializer = _serializers.serializerForWireName(typeName);
-      specifiedType = FullType(serializer.types.first);
+      specifiedType = FullType(serializer?.types.first);
     }
-    return _serializers.serialize(value, specifiedType: specifiedType);
+    return _serializers.serialize(value, specifiedType: specifiedType??FullType.unspecified);
   }
 
   @override
-  Object rawGraphTo(
+  Object? rawGraphTo(
     Object value, {
-    String typeName,
-    FullType specifiedType,
-    MapperDecodeContext context,
+    String? typeName,
+    FullType? specifiedType,
+    MapperDecodeContext? context,
   }) {
     if (specifiedType == null && typeName != null) {
       final serializer = _serializers.serializerForWireName(typeName);
-      specifiedType = FullType(serializer.types.first);
+      specifiedType = FullType(serializer?.types.first);
     }
-    return _serializers.deserialize(value, specifiedType: specifiedType);
+    return _serializers.deserialize(value, specifiedType: specifiedType??FullType.unspecified);
   }
 }
 
@@ -140,9 +140,9 @@ class _DocumentSerializer extends PrimitiveSerializer<Document> {
   @override
   Document deserialize(Serializers serializers, Object serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    if (serialized == null) {
-      return null;
-    }
+    // if (serialized == null) {
+    //   return null;
+    // }
     return serialized as Document;
   }
 

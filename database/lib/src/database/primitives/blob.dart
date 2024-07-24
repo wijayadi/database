@@ -38,7 +38,7 @@ abstract class Blob {
   /// Optional callback [onBlobMetadata], when non-null, will be invoked exactly
   /// once before the stream ends (unless an error occurs).
   Stream<List<int>> read({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    void Function(BlobMetadata metadata)? onBlobMetadata,
   });
 
   /// Reads the blob as bytes.
@@ -49,19 +49,19 @@ abstract class Blob {
   /// metadata about the blob. For example, HTTP header often contains MIME type
   /// and length.
   Future<List<int>> readAsBytes({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    required void Function(BlobMetadata metadata) onBlobMetadata,
   }) async {
     final chunks = await read(
       onBlobMetadata: onBlobMetadata,
     ).toList();
     switch (chunks.length) {
       case 0:
-        return List<int>(0);
+        return List<int>.empty();
       case 1:
         return chunks.single;
       default:
         final length = chunks.fold(0, (n, list) => n + list.length);
-        final result = List<int>(length);
+        final result = List<int>.filled(length, 0);
         var i = 0;
         for (var chunk in chunks) {
           result.setAll(i, chunk);
@@ -76,7 +76,7 @@ abstract class Blob {
   /// Optional callback [onBlobMetadata], when non-null, will be invoked exactly
   /// once before the future is completed (unless an error occurs).
   Future<Object> readAsJson({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    required void Function(BlobMetadata metadata) onBlobMetadata,
   }) async {
     final string = await readAsString(
       onBlobMetadata: onBlobMetadata,
@@ -89,7 +89,7 @@ abstract class Blob {
   /// Optional callback [onBlobMetadata], when non-null, will be invoked exactly
   /// once before the future is completed (unless an error occurs).
   Future<String> readAsString({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    required void Function(BlobMetadata metadata) onBlobMetadata,
   }) async {
     final bytes = await readAsBytes(
       onBlobMetadata: onBlobMetadata,
@@ -100,8 +100,8 @@ abstract class Blob {
 
 /// Metadata about [Blob].
 class BlobMetadata {
-  final int length;
-  final String mime;
+  final int? length;
+  final String? mime;
   const BlobMetadata({this.length, this.mime});
 
   @override
@@ -114,9 +114,9 @@ class BlobMetadata {
 
 /// An exception thrown by [Blob].
 class BlobReadException implements Exception {
-  final Blob blob;
-  final String message;
-  final Object error;
+  final Blob? blob;
+  final String? message;
+  final Object? error;
 
   BlobReadException({this.blob, this.message, this.error});
 
@@ -131,7 +131,7 @@ class _BytesBlob extends Blob {
 
   @override
   Stream<List<int>> read(
-      {void Function(BlobMetadata metadata) onBlobMetadata}) {
+      {void Function(BlobMetadata metadata)? onBlobMetadata}) {
     return Stream<List<int>>.value(_data);
   }
 }
@@ -149,21 +149,21 @@ class _StringBlob extends Blob {
 
   @override
   Stream<List<int>> read({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    void Function(BlobMetadata metadata)? onBlobMetadata,
   }) async* {
     yield (await readAsBytes());
   }
 
   @override
   Future<List<int>> readAsBytes({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    void Function(BlobMetadata metadata)? onBlobMetadata,
   }) async {
     return utf8.encode(_data);
   }
 
   @override
   Future<String> readAsString({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    required void Function(BlobMetadata metadata) onBlobMetadata,
   }) async {
     return _data;
   }
@@ -184,9 +184,9 @@ class _UriBlob extends Blob {
 
   /// Optional [httpClient] defines HTTP client that should be used to read the
   /// resource (when the scheme is "http" or "https").
-  final HttpClient httpClient;
+  final HttpClient? httpClient;
 
-  _UriBlob(String uri, {HttpClient httpClient})
+  _UriBlob(String uri, {HttpClient? httpClient})
       : this.fromUri(Uri.parse(uri), httpClient: httpClient);
 
   _UriBlob.fromUri(this.uri, {this.httpClient}) {
@@ -204,7 +204,7 @@ class _UriBlob extends Blob {
 
   @override
   Stream<List<int>> read({
-    void Function(BlobMetadata metadata) onBlobMetadata,
+    void Function(BlobMetadata metadata)? onBlobMetadata,
   }) async* {
     // Create request
     final httpClient = this.httpClient ?? HttpClient();

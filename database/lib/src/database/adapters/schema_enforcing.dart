@@ -73,13 +73,13 @@ class SchemaEnforcingDatabaseAdapter extends DelegatingDatabaseAdapter {
   final DatabaseSchema databaseSchema;
 
   SchemaEnforcingDatabaseAdapter({
-    @required DatabaseAdapter adapter,
-    @required this.databaseSchema,
+    required DatabaseAdapter adapter,
+    required this.databaseSchema,
   }) : super(adapter);
 
   @override
   Future<void> performDocumentInsert(DocumentInsertRequest request) async {
-    final schema = await request.collection.schema();
+    final schema = await request.collection!.schema();
     request.inputSchema ??= schema;
     schema?.checkTreeIsValid(request.data);
     return super.performDocumentInsert(request);

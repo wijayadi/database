@@ -27,7 +27,7 @@ import 'package:database/filter.dart';
 /// });
 /// ```
 class MapFilter extends Filter {
-  final Map<String, Filter> properties;
+  final Map<String, Filter?> properties;
 
   MapFilter(this.properties) {
     ArgumentError.checkNotNull(properties, 'properties');
@@ -38,18 +38,18 @@ class MapFilter extends Filter {
     final properties = this.properties;
     if (properties != null) {
       for (var filter in properties.values) {
-        yield (filter);
+        yield (filter!);
       }
     }
   }
 
   @override
-  int get hashCode => const MapEquality<String, Filter>().hash(properties);
+  int get hashCode => const MapEquality<String, Filter?>().hash(properties);
 
   @override
   bool operator ==(other) =>
       other is MapFilter &&
-      const MapEquality<String, Filter>().equals(properties, other.properties);
+      const MapEquality<String, Filter?>().equals(properties, other.properties);
 
   @override
   T accept<T, C>(FilterVisitor<T, C> visitor, C context) {

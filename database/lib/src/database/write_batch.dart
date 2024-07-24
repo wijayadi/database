@@ -44,10 +44,10 @@ abstract class WriteBatch {
   void deleteIfExists(Document document);
 
   /// Updates the document.
-  void update(Document document, {@required Map<String, Object> data});
+  void update(Document document, {required Map<String, Object> data});
 
   /// Upserts (inserts or updates) the document.
-  void upsert(Document document, {@required Map<String, Object> data});
+  void upsert(Document document, {required Map<String, Object> data});
 }
 
 class _WriteBatch extends WriteBatch {
@@ -74,14 +74,14 @@ class _WriteBatch extends WriteBatch {
   }
 
   @override
-  void update(Document document, {Map<String, Object> data}) {
+  void update(Document document, {required Map<String, Object> data}) {
     _list.add(() {
       return document.update(data: data);
     });
   }
 
   @override
-  void upsert(Document document, {Map<String, Object> data}) {
+  void upsert(Document document, {required Map<String, Object> data}) {
     _list.add(() {
       return document.upsert(data: data);
     });

@@ -18,7 +18,7 @@ import 'package:meta/meta.dart';
 class SuggestedQuery {
   final String queryString;
 
-  SuggestedQuery({@required this.queryString});
+  SuggestedQuery({required this.queryString});
 
   @override
   int get hashCode => queryString.hashCode;

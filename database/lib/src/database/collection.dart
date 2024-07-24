@@ -58,9 +58,9 @@ import 'package:database/search_query_parsing.dart';
 class Collection {
   /// Returns database where the document is.
   final Database database;
-  final Document parentDocument;
-  final Serializers serializers;
-  final FullType fullType;
+  final Document? parentDocument;
+  final Serializers? serializers;
+  final FullType? fullType;
 
   /// A non-blank identifier.
   ///
@@ -117,10 +117,10 @@ class Collection {
 
   /// Inserts a new value.
   Future<Document> insert({
-    Map<String, Object> data,
-    Reach reach,
+    required Map<String, Object?> data,
+    Reach? reach,
   }) async {
-    Document result;
+    late Document result;
     await DocumentInsertRequest(
       collection: this,
       document: null,
@@ -154,7 +154,7 @@ class Collection {
   }
 
   /// Reads schema of this collection, which may be null.
-  Future<Schema> schema() async {
+  Future<Schema?> schema() async {
     final schemaResponse = await SchemaReadRequest.forCollection(this)
         .delegateTo(database.adapter)
         .last;
@@ -166,8 +166,8 @@ class Collection {
   /// This is a shorthand for taking the last item in a stream returned by
   /// [searchIncrementally].
   Future<QueryResult> search({
-    Query query,
-    Reach reach,
+     Query? query,
+    Reach? reach,
   }) {
     return searchIncrementally(
       query: query,
@@ -187,14 +187,14 @@ class Collection {
   /// receive an [AndFilter] that contains both the parsed filter and the other
   /// filter.
   Future<void> searchAndDelete({
-    Query query,
-    Reach reach,
+    Query? query,
+    Reach? reach,
   }) async {
-    return DocumentSearchChunkedRequest(
+    await DocumentSearchChunkedRequest(
       collection: this,
       query: query,
       reach: reach,
-    ).delegateTo(database.adapter);
+    ).delegateTo(database.adapter).last;
   }
 
   /// Searches documents and returns the snapshots in chunks, which means that
@@ -227,7 +227,7 @@ class Collection {
   ///     );
   ///
   Stream<QueryResult> searchChunked({
-    Query query,
+    Query? query,
     Reach reach = Reach.server,
   }) async* {
     // TODO: Real implementation
@@ -268,9 +268,10 @@ class Collection {
   ///     );
   ///
   Stream<QueryResult> searchIncrementally({
-    Query query,
-    Reach reach = Reach.server,
+     Query? query,
+    Reach? reach,
   }) {
+    reach ??= Reach.server;
     return DocumentSearchRequest(
       collection: this,
       query: query,

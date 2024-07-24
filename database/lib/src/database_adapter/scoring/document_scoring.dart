@@ -27,7 +27,7 @@ class DocumentScoring {
   /// a single query.
   ///
   /// The default implementation returns [DocumentScoringStateBase].
-  DocumentScoringState newState(Filter filter) {
+  DocumentScoringState newState(Filter? filter) {
     return DocumentScoringStateBase(filter);
   }
 

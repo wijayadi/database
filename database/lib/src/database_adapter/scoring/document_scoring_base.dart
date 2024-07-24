@@ -35,7 +35,7 @@ class DocumentScoringStateBase extends DocumentScoringState
     implements FilterVisitor<double, Object> {
   static const _deepEquality = DeepCollectionEquality();
 
-  final Filter filter;
+  final Filter? filter;
 
   DocumentScoringStateBase(this.filter);
 
@@ -44,7 +44,7 @@ class DocumentScoringStateBase extends DocumentScoringState
     if (filter == null) {
       return 1.0;
     }
-    return filter.accept(this, snapshot.data);
+    return filter!.accept(this, snapshot.data);
   }
 
   @override
@@ -133,7 +133,8 @@ class DocumentScoringStateBase extends DocumentScoringState
       for (var entry in filter.properties.entries) {
         final name = entry.key;
         final value = input[name];
-        final propertyScore = entry.value.accept(this, value);
+        if (entry.value == null)  continue;
+        final propertyScore = entry.value!.accept(this, value);
         if (propertyScore == 0.0) {
           return 0.0;
         }

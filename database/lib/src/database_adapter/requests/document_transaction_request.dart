@@ -18,14 +18,14 @@ import 'package:meta/meta.dart';
 
 @sealed
 class DocumentTransactionRequest extends Request<Future<void>> {
-  final Reach reach;
+  final Reach? reach;
   final Duration timeout;
   final Future<void> Function(Transaction transaction) callback;
 
   DocumentTransactionRequest({
-    @required this.reach,
-    @required this.timeout,
-    @required this.callback,
+    this.reach,
+    required this.timeout,
+    required this.callback,
   });
 
   @override

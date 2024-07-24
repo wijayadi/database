@@ -18,8 +18,8 @@ import 'package:test/test.dart';
 
 void main() {
   group('SqlClient:', () {
-    List<SqlStatement> statements;
-    SqlClient sqlClient;
+    late List<SqlStatement> statements;
+    late SqlClient sqlClient;
 
     setUp(() {
       final databaseAdapter = _MockSqlDatabaseAdapter();
@@ -215,7 +215,7 @@ void main() {
     test('runInTransaction(_) uses lock', () async {
       final oldSqlClient = sqlClient;
 
-      Future otherTransactionFuture;
+      late Future otherTransactionFuture;
 
       await sqlClient.runInTransaction((newSqlClient) async {
         // First statement

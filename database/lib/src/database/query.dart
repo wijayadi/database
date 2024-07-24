@@ -52,18 +52,18 @@ class Query {
   /// An optional filter.
   ///
   /// The default is null, which means that all documents will be returned.
-  final Filter filter;
+  final Filter? filter;
 
   /// An optional sorter.
   ///
   /// The default value is null, which means that an arbitrary order is used.
-  final Sorter sorter;
+  final Sorter? sorter;
 
   /// An optional schema.
   ///
   /// The default value is null, which means that the whole document will be
   /// returned.
-  final Schema schema;
+  final Schema? schema;
 
   /// The number of items to skip.
   ///
@@ -73,7 +73,7 @@ class Query {
   /// The number of items to take.
   ///
   /// The default value is null, which means that all items will be the taken.
-  final int take;
+  final int? take;
 
   const Query({
     this.filter,
@@ -106,7 +106,7 @@ class Query {
   /// default document scoring algorithm.
   List<Snapshot> documentListFromIterable(
     Iterable<Snapshot> iterable, {
-    DocumentScoring documentScoring,
+    DocumentScoring? documentScoring,
   }) {
     final filter = this.filter;
     final sorter = this.sorter;
@@ -145,8 +145,8 @@ class Query {
   /// performance.
   Stream<List<Snapshot>> documentListStreamFromChunks(
     Stream<List<Snapshot>> stream, {
-    DocumentScoring documentScoring,
-    Sorter existingSorter,
+    DocumentScoring? documentScoring,
+    Sorter? existingSorter,
   }) {
     // Handle trivial case
     if (take == 0) {
@@ -210,7 +210,7 @@ class Query {
       // Take
       //
       if (take != null) {
-        iterable = iterable.take(take);
+        iterable = iterable.take(take!);
       }
 
       return List<Snapshot>.unmodifiable(iterable);
@@ -232,7 +232,7 @@ class Query {
   /// This is an optimized case when no sorting is needed.
   Stream<List<Snapshot>> _incrementalStreamFromSortedChunks(
       Stream<List<Snapshot>> stream,
-      {DocumentScoring documentScoring}) async* {
+      {DocumentScoring? documentScoring}) async* {
     documentScoring ??= const DocumentScoring();
     final documentScoringState = documentScoring.newState(filter);
     var remainingSkip = skip;
@@ -314,10 +314,10 @@ class Query {
   /// ```
   static Query parse(
     String source, {
-    Sorter sorter,
+    Sorter? sorter,
     int skip = 0,
-    int take,
-    Schema schema,
+    int? take,
+    Schema? schema,
   }) {
     final filter = SearchQueryParser().parseFilterFromString(source);
     return Query(
@@ -342,18 +342,18 @@ class QueryBuilder {
   /// Describes which graphs should be selected.
   ///
   /// The default is null, which means that all documents will be returned.
-  Filter filter;
+  Filter? filter;
 
   /// Describes how graphs should be sorted.
   ///
   /// The default value is null, which means that an arbitrary order is used.
-  Sorter sorter;
+  Sorter? sorter;
 
   /// Describes the subgraph to select.
   ///
   /// The default value is null, which means that the whole document will be
   /// returned.
-  Schema schema;
+  Schema? schema;
 
   /// The number of skipped graphs after filtering and sorting.
   ///
@@ -363,7 +363,7 @@ class QueryBuilder {
   /// The number of taken graphs after filtering, sorting, and skipping.
   ///
   /// The default value is null, which means that all items will be the taken.
-  int take;
+  int? take;
 
   QueryBuilder();
 
@@ -376,7 +376,7 @@ class QueryBuilder {
   /// Adds a filter the query. It's merged to the current query with
   /// [AndFilter] (logical AND).
   void addFilter(Filter filter) {
-    this.filter = AndFilter([this.filter, filter]).simplify();
+    this.filter = AndFilter([this.filter!, filter]).simplify();
   }
 
   /// Adds a sorter in the query. It will have a lower priority than existing

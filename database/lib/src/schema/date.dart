@@ -32,7 +32,7 @@ class DateSchema extends PrimitiveSchema<DateTime> {
   bool operator ==(other) => other is DateSchema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitDateSchema(this, context);
   }
 }

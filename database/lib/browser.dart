@@ -81,9 +81,9 @@ class BrowserLocalStorageDatabase extends DocumentDatabaseAdapter
 
   @override
   Future<void> performDocumentInsert(DocumentInsertRequest request) async {
-    final document = request.document ?? request.collection.newDocument();
+    final document = request.document ?? request.collection!.newDocument();
     if (request.onDocument != null) {
-      request.onDocument(document);
+      request.onDocument!(document);
     }
     final key = _documentKey(document);
     if (impl.containsKey(key)) {
@@ -122,21 +122,18 @@ class BrowserLocalStorageDatabase extends DocumentDatabaseAdapter
     final keys = impl.keys.where((key) => key.startsWith(prefix));
 
     // Construct snapshots
-    final snapshots = keys.map((key) {
+    var snapshots = <Snapshot>[];
+    for (var key in keys) {
       final documentId = _jsonPointerUnescape(key.substring(prefix.length));
       final document = collection.document(documentId);
       final serialized = impl[key];
-      if (serialized == null) {
-        return null;
-      }
-      final decoded =
-          _decode(request.outputSchema, request.collection.database, serialized)
-              as Map<String, Object>;
-      return Snapshot(
+      if (serialized == null) continue;
+      final decoded = _decode(request.outputSchema, request.collection.database, serialized) as Map<String, Object>;
+      snapshots.add(Snapshot(
         document: document,
         data: decoded,
-      );
-    });
+      ));
+    }
 
     List<Snapshot> result;
     final query = request.query ?? const Query();
@@ -193,9 +190,9 @@ class BrowserLocalStorageDatabase extends DocumentDatabaseAdapter
     return sb.toString();
   }
 
-  static String encode(Schema schema, Object value) {
+  static String encode(Schema? schema, Object value) {
     schema ??= Schema.fromValue(value);
-    final converted = schema.encodeWith(
+    final converted = schema!.encodeWith(
       const JsonEncoder(),
       {
         'schema': schema.toJson(),
@@ -205,12 +202,12 @@ class BrowserLocalStorageDatabase extends DocumentDatabaseAdapter
     return jsonEncode(converted);
   }
 
-  static Object _decode(Schema schema, Database database, String s) {
+  static Object _decode(Schema? schema, Database database, String s) {
     final json = jsonDecode(s) as Map<String, Object>;
-    schema ??= Schema.fromJson(json['schema']) ?? ArbitraryTreeSchema();
+    schema ??= Schema.fromJson(json['schema']!) ?? ArbitraryTreeSchema();
     return schema.decodeWith(
       JsonDecoder(database: database),
-      json['value'],
+      json['value']!,
     );
   }
 }

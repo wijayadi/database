@@ -14,11 +14,11 @@ class SearchEnginePromotingDatabaseAdapter extends DelegatingDatabaseAdapter {
     DocumentSearchRequest request,
     Object error,
     StackTrace stackTrace,
-  ) onSearchError;
+  )? onSearchError;
 
   SearchEnginePromotingDatabaseAdapter({
-    @required this.master,
-    @required this.searchEngine,
+    required this.master,
+    required this.searchEngine,
     this.onSearchError,
   })  : assert(master != null),
         assert(searchEngine != null),

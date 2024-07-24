@@ -20,11 +20,11 @@ import 'package:meta/meta.dart';
 class SqlTransactionRequest extends Request<Future<void>> {
   final SqlClient sqlClient;
   final Future<void> Function(SqlTransaction sqlTransaction) callback;
-  final Duration timeout;
+  final Duration? timeout;
 
   SqlTransactionRequest({
-    @required this.sqlClient,
-    @required this.callback,
+    required this.sqlClient,
+    required this.callback,
     this.timeout,
   });
 

@@ -44,8 +44,8 @@ class CachingDatabaseAdapter extends DelegatingDatabaseAdapter {
   final bool useCacheWhenMasterUnavailable;
 
   CachingDatabaseAdapter({
-    @required this.master,
-    @required this.cache,
+    required this.master,
+    required this.cache,
     this.useCacheWhenMasterUnavailable = true,
   }) : super(master) {
     ArgumentError.checkNotNull(master, 'master');
@@ -73,7 +73,7 @@ class CachingDatabaseAdapter extends DelegatingDatabaseAdapter {
     final masterFuture = super.performDocumentRead(request).last;
 
     // Read from cache and yield it
-    Snapshot cacheSnapshot;
+    Snapshot? cacheSnapshot;
     try {
       cacheSnapshot = await request.delegateTo(cache).last;
     } on DatabaseException {

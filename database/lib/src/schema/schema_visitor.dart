@@ -16,18 +16,18 @@ import 'package:database/schema.dart';
 
 abstract class SchemaVisitor<T, C> {
   const SchemaVisitor();
-  T visitArbitraryTreeSchema(ArbitraryTreeSchema schema, C context);
-  T visitBlobSchema(BlobSchema schema, C context);
-  T visitBoolSchema(BoolSchema schema, C context);
-  T visitBytesSchema(BytesSchema schema, C context);
-  T visitDateSchema(DateSchema schema, C context);
-  T visitDateTimeSchema(DateTimeSchema schema, C context);
-  T visitDocumentSchema(DocumentSchema schema, C context);
-  T visitDoubleSchema(DoubleSchema schema, C context);
-  T visitGeoPointSchema(GeoPointSchema schema, C context);
-  T visitInt64Schema(Int64Schema schema, C context);
-  T visitIntSchema(IntSchema schema, C context);
-  T visitListSchema(ListSchema schema, C context);
-  T visitMapSchema(MapSchema schema, C context);
-  T visitStringSchema(StringSchema schema, C context);
+  T? visitArbitraryTreeSchema(ArbitraryTreeSchema schema, C context);
+  T? visitBlobSchema(BlobSchema schema, C context);
+  T? visitBoolSchema(BoolSchema schema, C context);
+  T? visitBytesSchema(BytesSchema schema, C context);
+  T? visitDateSchema(DateSchema schema, C context);
+  T? visitDateTimeSchema(DateTimeSchema schema, C context);
+  T? visitDocumentSchema(DocumentSchema schema, C context);
+  T? visitDoubleSchema(DoubleSchema schema, C context);
+  T? visitGeoPointSchema(GeoPointSchema schema, C context);
+  T? visitInt64Schema(Int64Schema schema, C context);
+  T? visitIntSchema(IntSchema schema, C context);
+  T? visitListSchema(ListSchema schema, C context);
+  T? visitMapSchema(MapSchema schema, C context);
+  T? visitStringSchema(StringSchema schema, C context);
 }

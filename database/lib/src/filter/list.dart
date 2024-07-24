@@ -28,7 +28,7 @@ import 'package:database/filter.dart';
 class ListFilter extends Filter {
   final Filter items;
 
-  const ListFilter({this.items});
+  const ListFilter({required this.items});
 
   @override
   Iterable<Filter> get children sync* {

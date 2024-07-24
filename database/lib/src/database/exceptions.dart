@@ -25,23 +25,23 @@ import 'package:meta/meta.dart';
 ///       // ...
 ///     }
 class DatabaseException implements Exception {
-  final Document document;
+  final Document? document;
   final int code;
   final String name;
-  final String message;
-  final Object error;
+  final String? message;
+  final Object? error;
 
   const DatabaseException.custom({
     this.document,
-    @required this.code,
-    @required this.name,
+    required this.code,
+    required this.name,
     this.message,
     this.error,
   });
 
   const DatabaseException.databaseReadOnly({
-    String message,
-    Object error,
+    String? message,
+    Object? error,
   }) : this.custom(
           code: DatabaseExceptionCodes.databaseReadOnly,
           name: 'database_is_read_only',
@@ -51,8 +51,8 @@ class DatabaseException implements Exception {
 
   const DatabaseException.found(
     Document document, {
-    String message,
-    Object error,
+    String? message,
+    Object? error,
   }) : this.custom(
           document: document,
           code: DatabaseExceptionCodes.found,
@@ -62,9 +62,9 @@ class DatabaseException implements Exception {
         );
 
   const DatabaseException.internal({
-    Document document,
-    String message,
-    Object error,
+    Document? document,
+    String? message,
+    Object? error,
   }) : this.custom(
           document: document,
           code: DatabaseExceptionCodes.internal,
@@ -75,8 +75,8 @@ class DatabaseException implements Exception {
 
   const DatabaseException.notFound(
     Document document, {
-    String message,
-    Object error,
+    String? message,
+    Object? error,
   }) : this.custom(
           document: document,
           code: DatabaseExceptionCodes.notFound,
@@ -86,10 +86,10 @@ class DatabaseException implements Exception {
         );
 
   factory DatabaseException.sqlColumnValue({
-    @required String database,
-    @required String table,
-    @required String column,
-    @required Object value,
+    required String database,
+    required String table,
+    required String column,
+    required Object value,
   }) {
     return DatabaseException.internal(
       message:
@@ -98,9 +98,9 @@ class DatabaseException implements Exception {
   }
 
   const DatabaseException.transactionUnsupported({
-    Document document,
-    String message,
-    Object error,
+    Document? document,
+    String? message,
+    Object? error,
   }) : this.custom(
           document: document,
           code: DatabaseExceptionCodes.transactionUnsupported,
@@ -110,9 +110,9 @@ class DatabaseException implements Exception {
         );
 
   const DatabaseException.unavailable({
-    Document document,
-    String message,
-    Object error,
+    Document? document,
+    String? message,
+    Object? error,
   }) : this.custom(
           document: document,
           code: DatabaseExceptionCodes.unavailable,

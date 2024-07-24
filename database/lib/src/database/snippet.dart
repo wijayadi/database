@@ -25,7 +25,7 @@ class Snippet {
   final List<SnippetSpan> highlightedSpans;
 
   /// Optional line number. The first line has index 1.
-  final int line;
+  final int? line;
 
   Snippet(
     this.text, {
@@ -53,8 +53,8 @@ class SnippetSpan {
   final int length;
 
   SnippetSpan({
-    @required this.start,
-    @required this.length,
+    required this.start,
+    required this.length,
   });
 
   @override

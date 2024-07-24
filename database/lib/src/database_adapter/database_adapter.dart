@@ -38,11 +38,11 @@ abstract class DatabaseAdapter {
     return Database.withAdapter(this);
   }
 
-  Future<void> performCheckConnection({Duration timeout}) {
+  Future<void> performCheckConnection({Duration? timeout}) {
     return Future<void>.value();
   }
 
-  Future<void> performDocumentBatch(
+  Future<DocumentBatchResponse> performDocumentBatch(
     DocumentBatchRequest request,
   ) {
     final documentDeleteResponses = List<Future<void>>.unmodifiable(
@@ -75,8 +75,8 @@ abstract class DatabaseAdapter {
     return Future<DocumentBatchResponse>.value(DocumentBatchResponse(
       documentDeleteResponses: documentDeleteResponses,
       documentInsertResponses: documentInsertResponses,
-      documentSearchResponses: documentSearchResponses,
-      documentReadResponses: documentReadResponses,
+      documentSearchResponses: List<Stream<QueryResult>>.unmodifiable(documentSearchResponses),
+      documentReadResponses: List<Stream<Snapshot>>.unmodifiable(documentReadResponses),
       documentUpdateResponses: documentUpdateResponses,
       documentUpsertResponses: documentUpsertResponses,
     ));

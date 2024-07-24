@@ -26,7 +26,7 @@ abstract class SqlDatabaseAdapter extends DatabaseAdapter {
   final _lockWaiters = Queue<Completer<void>>();
 
   @override
-  Future<void> performDocumentBatch(DocumentBatchRequest request) {
+  Future<DocumentBatchResponse> performDocumentBatch(DocumentBatchRequest request) {
     throw UnimplementedError();
   }
 
@@ -132,7 +132,7 @@ abstract class SqlDatabaseAdapter extends DatabaseAdapter {
       final columnName = row[1] as String;
       final isNullable = _isNullableFrom(row[2] as String);
       final dataType = row[3] as String;
-      final int characterMaximumLength = row[3];
+      final int characterMaximumLength = row[4] as int;
 
       assert(tableSchemaName != null);
       assert(columnName != null);
@@ -193,7 +193,7 @@ abstract class SqlDatabaseAdapter extends DatabaseAdapter {
   Future<R> scheduleExclusiveAccess<R>(
     SqlClient sqlClient,
     Future<R> Function(SqlClient sqlClient) callback, {
-    Duration timeout,
+    Duration? timeout,
   }) async {
     while (_isLocked) {
       final completer = Completer<void>();
@@ -215,9 +215,9 @@ abstract class SqlDatabaseAdapter extends DatabaseAdapter {
   }
 
   static Schema _columnSchemaFrom({
-    @required String dataType,
-    @required bool isNullable,
-    @required int characterMaximumLength,
+    required String dataType,
+    required bool isNullable,
+    required int characterMaximumLength,
   }) {
     switch (dataType.toLowerCase()) {
       case 'bool':

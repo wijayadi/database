@@ -34,8 +34,8 @@ class GeoPointFilter extends Filter {
   final double maxDistanceInMeters;
 
   const GeoPointFilter({
-    @required this.near,
-    @required this.maxDistanceInMeters,
+    required this.near,
+    required this.maxDistanceInMeters,
   })  : assert(near != null),
         assert(maxDistanceInMeters != null);
 

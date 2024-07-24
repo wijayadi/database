@@ -112,7 +112,7 @@ class SearchQueryPrinter extends FilterVisitor<void, Null> {
       separator = true;
       _sb.write(entry.key);
       _sb.write(':');
-      entry.value.accept(this, context);
+      entry.value?.accept(this, context);
     }
   }
 
@@ -182,7 +182,7 @@ class SearchQueryPrinter extends FilterVisitor<void, Null> {
   @override
   void visitValueFilter(ValueFilter filter, Null context) {
     _sb.write('=');
-    writeValue(filter.value);
+    writeValue(filter.value??'null');
   }
 
   @protected

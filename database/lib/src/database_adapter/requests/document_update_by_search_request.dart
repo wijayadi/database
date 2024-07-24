@@ -24,14 +24,14 @@ class DocumentUpdateBySearchRequest extends Request<Future<void>> {
   final Map<String, Object> data;
   final bool isPatch;
   final Reach reach;
-  final void Function(int total) onAffectedCount;
-  Schema inputSchema;
+  final void Function(int total)? onAffectedCount;
+  Schema? inputSchema;
 
   DocumentUpdateBySearchRequest({
-    @required this.collection,
-    @required this.query,
-    @required this.data,
-    @required this.reach,
+    required this.collection,
+    required this.query,
+    required this.data,
+    required this.reach,
     this.isPatch = true,
     this.onAffectedCount,
     this.inputSchema,

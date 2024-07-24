@@ -23,7 +23,7 @@ abstract class Transaction {
 
   Future<bool> isSuccess;
 
-  Transaction({@required this.isSuccess, @required this.reach});
+  Transaction({required this.isSuccess, required this.reach});
 
   Future<void> delete(Document document) {
     return DocumentDeleteRequest(
@@ -51,7 +51,7 @@ abstract class Transaction {
     ).delegateTo(document.database.adapter).last;
   }
 
-  Future<void> insert(Document document, {@required Map<String, Object> data}) {
+  Future<void> insert(Document document, {required Map<String, Object> data}) {
     return DocumentInsertRequest(
       transaction: this,
       collection: document.parent,
@@ -61,7 +61,7 @@ abstract class Transaction {
     ).delegateTo(document.database.adapter);
   }
 
-  Future<void> update(Document document, {@required Map<String, Object> data}) {
+  Future<void> update(Document document, {required Map<String, Object> data}) {
     return DocumentUpdateRequest(
       transaction: this,
       document: document,
@@ -71,7 +71,7 @@ abstract class Transaction {
     ).delegateTo(document.database.adapter);
   }
 
-  Future<void> upsert(Document document, {@required Map<String, Object> data}) {
+  Future<void> upsert(Document document, {required Map<String, Object?> data}) {
     return DocumentUpsertRequest(
       transaction: this,
       document: document,

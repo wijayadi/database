@@ -21,12 +21,12 @@ import 'package:meta/meta.dart';
 class DocumentReadWatchRequest extends Request<Stream<Snapshot>> {
   final Document document;
   final Reach reach;
-  final Duration pollingInterval;
-  Schema outputSchema;
+  final Duration? pollingInterval;
+  Schema? outputSchema;
 
   DocumentReadWatchRequest({
-    @required this.document,
-    @required this.reach,
+    required this.document,
+    required this.reach,
     this.pollingInterval,
     this.outputSchema,
   });

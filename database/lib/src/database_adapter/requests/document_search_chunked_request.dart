@@ -20,14 +20,14 @@ import 'package:meta/meta.dart';
 @sealed
 class DocumentSearchChunkedRequest extends Request<Stream<QueryResult>> {
   final Collection collection;
-  final Query query;
-  final Reach reach;
-  Schema schema;
+  final Query? query;
+  final Reach? reach;
+  Schema? schema;
 
   DocumentSearchChunkedRequest(
-      {@required this.collection,
-      @required this.query,
-      @required this.reach,
+      {required this.collection,
+      this.query,
+      this.reach,
       this.schema,
       s});
 

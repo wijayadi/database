@@ -19,20 +19,20 @@ import 'package:meta/meta.dart';
 
 @sealed
 class DocumentInsertRequest extends Request<Future<void>> {
-  final Transaction transaction;
-  final Collection collection;
-  final Document document;
-  final Map<String, Object> data;
-  final Reach reach;
-  final void Function(Document onDocument) onDocument;
-  Schema inputSchema;
+  final Transaction? transaction;
+  final Collection? collection;
+  final Document? document;
+  final Map<String, Object?> data;
+  final Reach? reach;
+  final void Function(Document onDocument)? onDocument;
+  Schema? inputSchema;
 
   DocumentInsertRequest({
     this.transaction,
-    @required Collection collection,
-    @required this.document,
-    @required this.data,
-    @required this.reach,
+    Collection? collection,
+    this.document,
+    required this.data,
+    this.reach,
     this.onDocument,
     this.inputSchema,
   }) : collection = document == null ? collection : document.parent;

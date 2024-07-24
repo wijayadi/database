@@ -55,7 +55,7 @@ abstract class Database {
   final _collections = <String, Collection>{};
 
   /// Lazily created SqlClient.
-  SqlClient _sqlClient;
+  SqlClient? _sqlClient;
 
   Database();
 
@@ -74,7 +74,7 @@ abstract class Database {
   /// Checks that the database can be used.
   ///
   /// The method will throw a descriptive error if the database can't be used.
-  Future<void> checkHealth({Duration timeout}) async {
+  Future<void> checkHealth({Duration? timeout}) async {
     await adapter.performCheckConnection(timeout: timeout);
   }
 
@@ -157,9 +157,9 @@ abstract class Database {
   ///     }
   /// ```
   Future<void> runInTransaction({
-    @required Reach reach,
-    @required Duration timeout,
-    @required Future<void> Function(Transaction transaction) callback,
+    required Reach reach,
+    required Duration timeout,
+    required Future<void> Function(Transaction transaction) callback,
   }) async {
     await adapter.performDocumentTransaction(DocumentTransactionRequest(
       reach: reach,

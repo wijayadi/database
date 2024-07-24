@@ -19,18 +19,18 @@ import 'package:database/schema.dart';
 import 'package:test/test.dart';
 
 void runCollectionAndDocumentTests() {
-  Database database;
-  Collection collection;
+  late Database database;
+  late Collection collection;
   final inserted = <Document>[];
 
-  Future<Document> insert({Map<String, Object> data}) async {
+  Future<Document> insert({required Map<String, Object?> data}) async {
     final document = await collection.insert(data: data);
     inserted.add(document);
     return document;
   }
 
   setUpAll(() async {
-    database = await DatabaseAdapterTester.current.databaseBuilder();
+    database = await DatabaseAdapterTester.current!.databaseBuilder();
   });
 
   setUp(() async {
@@ -411,7 +411,7 @@ void runCollectionAndDocumentTests() {
       });
 
       group('different values:', () {
-        Schema schema;
+        late Schema schema;
         setUp(() {
           schema = MapSchema({
             'null': ArbitraryTreeSchema(),
@@ -954,7 +954,7 @@ void runCollectionAndDocumentTests() {
       });
     });
 
-    if (DatabaseAdapterTester.current.supportsTransactions) {
+    if (DatabaseAdapterTester.current!.supportsTransactions) {
       group('transactions:', () {
         test('simple', () async {
           if (database == null) {
@@ -1006,10 +1006,10 @@ void runCollectionAndDocumentTests() {
 }
 
 void runSqlTests() {
-  Database database;
+  Database? database;
 
   setUpAll(() async {
-    database = await DatabaseAdapterTester.current.databaseBuilder();
+    database = await DatabaseAdapterTester.current!.databaseBuilder();
   });
 
   tearDownAll(() async {
@@ -1021,7 +1021,7 @@ void runSqlTests() {
       return;
     }
 
-    final sqlClient = await database.sqlClient;
+    final sqlClient = await database!.sqlClient;
 
     //
     // Create table
@@ -1096,7 +1096,7 @@ void runSqlTests() {
 }
 
 Future<void> _waitAfterWrite() {
-  return Future<void>.delayed(DatabaseAdapterTester.current.writeDelay);
+  return Future<void>.delayed(DatabaseAdapterTester.current!.writeDelay);
 }
 
 /// IMPORTANT:
@@ -1107,7 +1107,7 @@ Future<void> _waitAfterWrite() {
 ///     ./tool/copy_database_adapter_test.sh
 ///
 class DatabaseAdapterTester {
-  static DatabaseAdapterTester current;
+  static DatabaseAdapterTester? current;
 
   /// Is it a cache?
   final bool isCache;

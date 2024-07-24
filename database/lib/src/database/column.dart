@@ -24,7 +24,7 @@ abstract class Column<T> implements ColumnQueryHelper<T> {
 ///     // Use ColumnQueryHelper
 ///     final top10Ratings = column.descending().take(10).toList();
 ///
-abstract class ColumnQueryHelper<T> {
+mixin ColumnQueryHelper<T> {
   Future<int> get length => toStream().length;
 
   ColumnQueryHelper<T> ascending();
@@ -48,10 +48,10 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
   @override
   final Collection collection;
   final String _propertyName;
-  final bool Function(T value) _where;
-  final bool _isAscending;
-  final int _skip;
-  final int _take;
+  final bool Function(T value)? _where;
+  final bool? _isAscending;
+  final int? _skip;
+  final int? _take;
 
   _ColumnQueryHelper(
     this.collection,
@@ -105,7 +105,7 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
       _propertyName,
       _where,
       _isAscending,
-      _skip + n,
+      _skip??0 + n,
       _take,
     );
   }
@@ -133,7 +133,7 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
   Stream<T> toStream() async* {
     if (_isAscending != null) {
       final list = await toList();
-      if (_isAscending) {
+      if (_isAscending!) {
         list.sort();
       } else {
         list.sort();
@@ -143,8 +143,8 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
       }
       return;
     }
-    var skip = _skip;
-    var take = _take;
+    var skip = _skip??0;
+    var take = _take??0;
     if (take == 0) {
       return;
     }
@@ -152,14 +152,14 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
       for (var item in chunk.snapshots) {
         final value = item.data[_propertyName];
         final where = _where;
-        if (where != null && !where(value)) {
+        if (where != null && !where(value as T)) {
           continue;
         }
         if (skip > 0) {
           skip--;
           continue;
         }
-        yield (value);
+        yield (value as T);
         take--;
         if (take == 0) {
           return;
@@ -171,7 +171,7 @@ class _ColumnQueryHelper<T> extends Column<T> with ColumnQueryHelper<T> {
   @override
   ColumnQueryHelper<T> where(bool Function(T) func) {
     final oldFunc = _where;
-    final newFunc = (value) => oldFunc(value) && func(value);
+    final newFunc = (value) => (oldFunc==null || oldFunc(value)) && func(value);
     return _ColumnQueryHelper(
       collection,
       _propertyName,

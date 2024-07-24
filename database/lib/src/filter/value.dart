@@ -19,7 +19,7 @@ import 'package:database/filter.dart';
 class ValueFilter extends Filter {
   static const _equality = DeepCollectionEquality();
 
-  final Object value;
+  final Object? value;
 
   ValueFilter(this.value);
 

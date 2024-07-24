@@ -21,15 +21,15 @@ import 'package:meta/meta.dart';
 class DocumentDeleteBySearchRequest extends Request<Future<void>> {
   final Collection collection;
   final Query query;
-  final void Function(int total) onAffectedCount;
+  final void Function(int total)? onAffectedCount;
   final Reach reach;
 
-  Schema schema;
+  Schema? schema;
 
   DocumentDeleteBySearchRequest({
-    @required this.collection,
-    @required this.query,
-    @required this.reach,
+    required this.collection,
+    required this.query,
+    required this.reach,
     this.onAffectedCount,
   });
 

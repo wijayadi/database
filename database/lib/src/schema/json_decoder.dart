@@ -22,7 +22,7 @@ import 'package:meta/meta.dart';
 /// Decodes JSON based on [Schema] arguments. For decoding, use [JsonDecoder].
 class JsonDecoder extends SchemaBasedConverterBase {
   /// Database for constructing [Document] objects.
-  final Database database;
+  final Database? database;
 
   /// Whether to support the following special strings when schema is
   /// [DoubleSchema]:
@@ -32,12 +32,12 @@ class JsonDecoder extends SchemaBasedConverterBase {
   final bool supportSpecialDoubleValues;
 
   JsonDecoder({
-    @required this.database,
+    this.database,
     this.supportSpecialDoubleValues = false,
   });
 
   @override
-  Uint8List visitBytesSchema(BytesSchema schema, Object argument) {
+  Uint8List? visitBytesSchema(BytesSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -48,7 +48,7 @@ class JsonDecoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDateSchema(DateSchema schema, Object argument) {
+  Object? visitDateSchema(DateSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -59,7 +59,7 @@ class JsonDecoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDateTimeSchema(DateTimeSchema schema, Object argument) {
+  Object? visitDateTimeSchema(DateTimeSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -71,7 +71,7 @@ class JsonDecoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Object visitDocumentSchema(DocumentSchema schema, Object argument) {
+  Object? visitDocumentSchema(DocumentSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -83,14 +83,14 @@ class JsonDecoder extends SchemaBasedConverterBase {
       if (parts.length == 2) {
         final collectionId = _jsonPointerUnescape(parts[0]);
         final documentId = _jsonPointerUnescape(parts[1]);
-        return database.collection(collectionId).document(documentId);
+        return database!.collection(collectionId).document(documentId);
       }
     }
     throw ArgumentError.value(argument);
   }
 
   @override
-  Object visitDoubleSchema(DoubleSchema schema, Object argument) {
+  Object? visitDoubleSchema(DoubleSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -111,7 +111,7 @@ class JsonDecoder extends SchemaBasedConverterBase {
   }
 
   @override
-  GeoPoint visitGeoPointSchema(GeoPointSchema schema, Object argument) {
+  GeoPoint? visitGeoPointSchema(GeoPointSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -124,9 +124,9 @@ class JsonDecoder extends SchemaBasedConverterBase {
   }
 
   @override
-  Int64 visitInt64Schema(Int64Schema schema, Object argument) {
+  Int64? visitInt64Schema(Int64Schema schema, Object? argument) {
     if (argument == null) {
-      return argument;
+      return null;
     }
     if (argument is String) {
       return Int64.parseInt(argument);

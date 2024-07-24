@@ -18,7 +18,7 @@ import 'package:database/sql.dart';
 /// Describes a SQL query that [DatabaseAdapter] should perform.
 class SqlQueryRequest extends Request<Future<SqlIterator>> {
   final SqlStatement sqlStatement;
-  final SqlTransaction sqlTransaction;
+  final SqlTransaction? sqlTransaction;
 
   SqlQueryRequest(this.sqlStatement, {this.sqlTransaction}) {
     ArgumentError.checkNotNull(sqlStatement);

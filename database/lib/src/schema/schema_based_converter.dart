@@ -29,7 +29,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   const SchemaBasedConverterBase();
 
   @override
-  Object visitArbitraryTreeSchema(ArbitraryTreeSchema schema, Object argument) {
+  Object? visitArbitraryTreeSchema(ArbitraryTreeSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -77,7 +77,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitBlobSchema(BlobSchema schema, Object argument) {
+  Object? visitBlobSchema(BlobSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -88,7 +88,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitBoolSchema(BoolSchema schema, Object argument) {
+  Object? visitBoolSchema(BoolSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -99,7 +99,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitBytesSchema(BytesSchema schema, Object argument) {
+  Object? visitBytesSchema(BytesSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -110,7 +110,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitDateSchema(DateSchema schema, Object argument) {
+  Object? visitDateSchema(DateSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -121,7 +121,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitDateTimeSchema(DateTimeSchema schema, Object argument) {
+  Object? visitDateTimeSchema(DateTimeSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -132,7 +132,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitDocumentSchema(DocumentSchema schema, Object argument) {
+  Object? visitDocumentSchema(DocumentSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -143,7 +143,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitDoubleSchema(DoubleSchema schema, Object argument) {
+  Object? visitDoubleSchema(DoubleSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -154,7 +154,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitGeoPointSchema(GeoPointSchema schema, Object argument) {
+  Object? visitGeoPointSchema(GeoPointSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -165,7 +165,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitInt64Schema(Int64Schema schema, Object argument) {
+  Object? visitInt64Schema(Int64Schema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -176,7 +176,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitIntSchema(IntSchema schema, Object argument) {
+  Object? visitIntSchema(IntSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -187,7 +187,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitListSchema(ListSchema schema, Object argument) {
+  Object? visitListSchema(ListSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -204,7 +204,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitMapSchema(MapSchema schema, Object argument) {
+  Object? visitMapSchema(MapSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }
@@ -217,7 +217,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
         final valueSchema = properties[key] ??
             schema.additionalValues ??
             const ArbitraryTreeSchema();
-        result[key] = valueSchema.acceptVisitor(this, value);
+        result[key] = valueSchema!.acceptVisitor(this, value)!;
       }
       return Map<String, Object>.unmodifiable(result);
     }
@@ -225,7 +225,7 @@ class SchemaBasedConverterBase extends SchemaVisitor<Object, Object> {
   }
 
   @override
-  Object visitStringSchema(StringSchema schema, Object argument) {
+  Object? visitStringSchema(StringSchema schema, Object argument) {
     if (argument == null) {
       return null;
     }

@@ -28,25 +28,25 @@ class QueryResult {
   /// Query.
   final Query query;
 
-  List<Snapshot> _snapshots;
+  List<Snapshot>? _snapshots;
 
-  List<QueryResultItem> _items;
+  List<QueryResultItem>? _items;
 
   /// Suggested queries.
-  final List<SuggestedQuery> suggestedQueries;
+  final List<SuggestedQuery>? suggestedQueries;
 
   /// Estimate of the total number of matches. Null if count was not requested.
-  final int count;
+  final int? count;
 
   /// Optional vendor-specific data received from the database.
   /// For example, a database adapter for Elasticsearch could expose JSON
   /// response received from the REST API of Elasticsearch.
-  final Object vendorData;
+  final Object? vendorData;
 
   QueryResult({
-    @required this.collection,
-    @required this.query,
-    @required List<Snapshot> snapshots,
+    required this.collection,
+    required this.query,
+    required List<Snapshot> snapshots,
     this.count,
     this.vendorData,
   })  : assert(collection != null),
@@ -57,9 +57,9 @@ class QueryResult {
         suggestedQueries = const <SuggestedQuery>[];
 
   QueryResult.withDetails({
-    @required this.collection,
-    @required this.query,
-    @required List<QueryResultItem> items,
+    required this.collection,
+    required this.query,
+    required List<QueryResultItem> items,
     this.count,
     this.suggestedQueries,
     this.vendorData,
@@ -84,13 +84,13 @@ class QueryResult {
     _items ??= List<QueryResultItem>.unmodifiable(
       snapshots.map((snapshot) => QueryResultItem(snapshot: snapshot)),
     );
-    return _items;
+    return _items!;
   }
 
   /// Returned document snapshots.
   List<Snapshot> get snapshots {
     _snapshots ??= List.unmodifiable(items.map((item) => item.snapshot));
-    return _snapshots;
+    return _snapshots!;
   }
 
   @override

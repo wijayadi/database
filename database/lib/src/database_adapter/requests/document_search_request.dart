@@ -20,14 +20,14 @@ import 'package:meta/meta.dart';
 @sealed
 class DocumentSearchRequest extends Request<Stream<QueryResult>> {
   final Collection collection;
-  final Query query;
-  final Reach reach;
-  Schema outputSchema;
+  final Query? query;
+  final Reach? reach;
+  Schema? outputSchema;
 
   DocumentSearchRequest({
-    @required this.collection,
-    @required this.query,
-    @required this.reach,
+    required this.collection,
+    this.query,
+    this.reach,
     this.outputSchema,
   });
 

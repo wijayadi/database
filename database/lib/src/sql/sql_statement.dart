@@ -26,7 +26,7 @@ class SqlStatement {
   final String value;
   final List arguments;
 
-  SqlStatement(this.value, [List arguments])
+  SqlStatement(this.value, [List? arguments])
       : assert(value != null),
         arguments = arguments ?? const [];
 

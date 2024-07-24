@@ -40,17 +40,17 @@ class ArbitraryTreeSchema extends Schema<Object> {
       other is ArbitraryTreeSchema && doubleSchema == other.doubleSchema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitArbitraryTreeSchema(this, context);
   }
 
   @override
-  bool isValidSchema({List cycleDetectionStack}) {
+  bool isValidSchema({List? cycleDetectionStack}) {
     return true;
   }
 
   @override
-  bool isValidTree(Object argument, {List cycleDetectionStack}) {
+  bool isValidTree(Object? argument, {List? cycleDetectionStack}) {
     if (argument is double) {
       return doubleSchema.isValidTree(argument);
     }
@@ -85,7 +85,7 @@ class ArbitraryTreeSchema extends Schema<Object> {
         }
         return true;
       } finally {
-        cycleDetectionStack.removeLast();
+        cycleDetectionStack!.removeLast();
       }
     }
     if (argument is Map) {
@@ -105,14 +105,14 @@ class ArbitraryTreeSchema extends Schema<Object> {
                   cycleDetectionStack: cycleDetectionStack);
         });
       } finally {
-        cycleDetectionStack.removeLast();
+        cycleDetectionStack!.removeLast();
       }
     }
     return false;
   }
 
   @override
-  Object selectTree(Object argument, {bool ignoreErrors = false}) {
+  Object? selectTree(Object? argument, {bool ignoreErrors = false}) {
     if (argument == null ||
         argument is bool ||
         argument is num ||
@@ -125,7 +125,7 @@ class ArbitraryTreeSchema extends Schema<Object> {
       );
     }
     if (argument is Map) {
-      final result = <String, Object>{};
+      final result = <String, Object?>{};
       for (var entry in argument.entries) {
         result[entry.key] = selectTree(entry.value, ignoreErrors: ignoreErrors);
       }

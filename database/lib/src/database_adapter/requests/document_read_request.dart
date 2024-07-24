@@ -19,15 +19,15 @@ import 'package:meta/meta.dart';
 
 @sealed
 class DocumentReadRequest extends Request<Stream<Snapshot>> {
-  final Transaction transaction;
+  final Transaction? transaction;
   final Document document;
-  final Reach reach;
-  Schema outputSchema;
+  final Reach? reach;
+  Schema? outputSchema;
 
   DocumentReadRequest({
     this.transaction,
-    @required this.document,
-    @required this.reach,
+    required this.document,
+    this.reach,
     this.outputSchema,
   });
 

@@ -45,7 +45,7 @@ class MultiSorter extends Sorter {
       const ListEquality<Sorter>().equals(sorters, other.sorters);
 
   @override
-  int compare(Object left, Object right, {Comparator comparator}) {
+  int compare(Object left, Object right, {Comparator? comparator}) {
     for (var sorter in sorters) {
       final result = sorter.compare(left, right, comparator: comparator);
       if (result != 0) {
@@ -56,7 +56,7 @@ class MultiSorter extends Sorter {
   }
 
   @override
-  Sorter simplify() {
+  Sorter? simplify() {
     var oldSorters = sorters;
     if (oldSorters.isEmpty) {
       return null;
@@ -64,7 +64,7 @@ class MultiSorter extends Sorter {
     if (oldSorters.length == 1) {
       return oldSorters.single.simplify();
     }
-    List<Sorter> newSorters;
+    List<Sorter>? newSorters;
     for (var i = 0; i < oldSorters.length; i++) {
       final oldSorter = oldSorters[i];
       final newSorter = oldSorter.simplify();
@@ -125,13 +125,13 @@ class PropertySorter extends Sorter {
       isDescending == other.isDescending;
 
   @override
-  int compare(Object left, Object right, {Comparator comparator}) {
+  int compare(Object left, Object right, {Comparator? comparator}) {
     if (left is Map<String, Object>) {
       if (right is Map<String, Object>) {
         final leftValue = left[name];
         final rightValue = right[name];
-        comparator ??= defaultComparator;
-        final result = comparator(leftValue, rightValue);
+        var cpr = comparator ?? defaultComparator;
+        final result = cpr!(leftValue, rightValue);
         return isDescending ? -result : result;
       }
     }
@@ -148,15 +148,15 @@ class PropertySorter extends Sorter {
 abstract class Sorter {
   const Sorter();
 
-  int compare(Object left, Object right, {Comparator comparator});
+  int compare(Object left, Object right, {Comparator? comparator});
 
   int compareSnapshot(
     Snapshot left,
     Snapshot right, {
-    Comparator comparator,
+    Comparator? comparator,
   }) {
     return compare(left.data, right.data, comparator: comparator);
   }
 
-  Sorter simplify() => this;
+  Sorter? simplify() => this;
 }

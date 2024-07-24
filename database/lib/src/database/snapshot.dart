@@ -19,16 +19,16 @@ import 'package:meta/meta.dart';
 /// Builds a [Snapshot].
 class SnaphotBuilder {
   /// Document that produced this snapshot.
-  Document document;
+  late Document document;
 
-  bool exists;
+  bool? exists;
 
-  String versionId;
+  String? versionId;
 
   /// Optional data of the snapshot.
-  Map<String, Object> data;
+  late Map<String, Object?> data;
 
-  Object vendorData;
+  Object? vendorData;
 
   @override
   int get hashCode => build().hashCode;
@@ -64,28 +64,28 @@ class Snapshot {
   final bool exists;
 
   /// Optional version ID. Only some databases return version IDs.
-  final String versionId;
+  final String? versionId;
 
   /// Optional data of the snapshot.
-  final Map<String, Object> data;
+  final Map<String, Object?> data;
 
   /// Optional vendor-specific data received from the database.
   /// For example, a database adapter for Elasticsearch could expose JSON
   /// response received from the REST API of Elasticsearch.
-  final Object vendorData;
+  final Object? vendorData;
 
   Snapshot({
-    @required this.document,
-    @required this.data,
+    required this.document,
+    required this.data,
     this.exists = true,
     this.versionId,
     this.vendorData,
   })  : assert(document != null),
         assert(exists != null);
 
-  Snapshot.notFound(this.document, {Object vendorData})
+  Snapshot.notFound(this.document, {Object? vendorData})
       : exists = false,
-        data = null,
+        data = {},
         versionId = null,
         vendorData = vendorData;
 

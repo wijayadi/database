@@ -34,7 +34,7 @@ class BoolSchema extends PrimitiveSchema<bool> {
   bool operator ==(other) => other is BoolSchema;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitBoolSchema(this, context);
   }
 }

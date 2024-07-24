@@ -99,7 +99,7 @@ class Document extends $pb.GeneratedMessage {
         ..aOS(3, 'documentId', protoName: 'documentId')
         ..hasRequiredFields = false;
 
-  static Document _defaultInstance;
+  static Document _defaultInstance = getDefault();
   factory Document() => create();
   factory Document.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
@@ -144,7 +144,7 @@ class Document extends $pb.GeneratedMessage {
 
   @$core.override
   Document copyWith(void Function(Document) updates) =>
-      super.copyWith((message) => updates(message as Document));
+      super.copyWith((message) => updates(message as Document)) as Document;
   @$core.override
   Document createEmptyInstance() => create();
 

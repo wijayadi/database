@@ -68,10 +68,10 @@ class SecurityAdapter extends DelegatingDatabaseAdapter {
   FutureOr<QueryResult> transformQueryResult(
       Request request, QueryResult result) async {
     final oldItems = result.items;
-    final newItems = List<QueryResultItem>(oldItems.length);
-    for (var i = 0; i < newItems.length; i++) {
+    var newItems = <QueryResultItem>[];
+    for (var i = 0; i < oldItems.length; i++) {
       final oldItem = oldItems[i];
-      newItems[i] = QueryResultItem(
+      var newItem = QueryResultItem(
         snapshot: await transformSnapshot(
           request,
           oldItem.snapshot,
@@ -79,6 +79,7 @@ class SecurityAdapter extends DelegatingDatabaseAdapter {
         score: oldItem.score,
         snippets: oldItem.snippets,
       );
+      newItems.add(newItem);
     }
     return QueryResult.withDetails(
       collection: result.collection,

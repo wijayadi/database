@@ -36,12 +36,12 @@ class DoubleSchema extends PrimitiveSchema<double> {
       supportSpecialValues == other.supportSpecialValues;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitDoubleSchema(this, context);
   }
 
   @override
-  bool isValidTree(Object argument, {List cycleDetectionStack}) {
+  bool isValidTree(Object? argument, {List? cycleDetectionStack}) {
     return argument == null ||
         (argument is double &&
             ((!argument.isNaN && !argument.isInfinite) ||

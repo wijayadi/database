@@ -20,18 +20,18 @@ export 'package:built_value/serializer.dart' show FullType;
 abstract class Mapper {
   const Mapper();
 
-  Object rawGraphFrom(
+  Object? rawGraphFrom(
     Object value, {
-    String typeName,
-    FullType specifiedType,
-    MapperEncodeContext context,
+    String? typeName,
+    FullType? specifiedType,
+    MapperEncodeContext? context,
   });
 
-  Object rawGraphTo(
+  Object? rawGraphTo(
     Object value, {
-    String typeName,
-    FullType specifiedType,
-    MapperDecodeContext context,
+    String? typeName,
+    FullType? specifiedType,
+    MapperDecodeContext? context,
   });
 }
 
@@ -42,10 +42,10 @@ class MapperDecodeContext {
     ArgumentError.checkNotNull(_orm);
   }
 
-  Object decode(
+  Object? decode(
     Object value, {
-    String typeName,
-    FullType specifiedType,
+    String? typeName,
+    FullType? specifiedType,
   }) {
     return _orm.rawGraphTo(
       value,
@@ -63,10 +63,10 @@ class MapperEncodeContext {
     ArgumentError.checkNotNull(_objectMapper);
   }
 
-  Object encode(
+  Object? encode(
     Object value, {
-    String typeName,
-    FullType specifiedType,
+    String? typeName,
+    FullType? specifiedType,
   }) {
     return _objectMapper.rawGraphFrom(
       value,

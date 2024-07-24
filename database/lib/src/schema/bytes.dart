@@ -24,7 +24,7 @@ import 'package:meta/meta.dart';
 class BytesSchema extends PrimitiveSchema<Uint8List> {
   static const String nameForJson = 'bytes';
 
-  final int maxLength;
+  final int? maxLength;
 
   const BytesSchema({this.maxLength});
 
@@ -39,7 +39,7 @@ class BytesSchema extends PrimitiveSchema<Uint8List> {
       other is BytesSchema && maxLength == other.maxLength;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitBytesSchema(this, context);
   }
 }

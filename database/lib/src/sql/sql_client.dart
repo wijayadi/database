@@ -87,13 +87,23 @@ class SqlClient extends SqlClientBase {
   /// ```
   Future<void> runInTransaction(
     Future<void> Function(SqlTransaction sqlTransaction) callback, {
-    Duration timeout,
+    Duration? timeout,
   }) {
     return SqlTransactionRequest(
       sqlClient: this,
       callback: callback,
       timeout: timeout,
     ).delegateTo(database.adapter);
+  }
+
+  /// Returns a helper for building SQL statements.
+  ///
+  /// ```
+  /// await client.table('person').insert({'name': 'Alan Turing'});
+  /// await client.table('person').deleteWhere({'name': 'Alan Turing'});
+  /// ```
+  SqlClientTableHelper table(String name) {
+    return SqlClientTableHelper._(this, name);
   }
 }
 
@@ -136,7 +146,7 @@ abstract class SqlClientBase {
   ///   ['shampoo', 8],
   /// );
   /// ```
-  Future<SqlStatementResult> execute(String sql, [List arguments]) {
+  Future<SqlStatementResult> execute(String sql, [List? arguments]) {
     return rawExecute(SqlStatement(sql, arguments));
   }
 
@@ -150,7 +160,7 @@ abstract class SqlClientBase {
   ///   [8, 1],
   /// );
   /// ```
-  SqlClientTableQueryHelper query(String sql, [List arguments]) {
+  SqlClientTableQueryHelper query(String sql, [List? arguments]) {
     return SqlClientTableQueryHelper._(this, SqlStatement(sql, arguments));
   }
 
@@ -160,13 +170,5 @@ abstract class SqlClientBase {
   /// Sends SQL query. Unlike [query], takes [SqlStatement] as argument.
   Future<SqlIterator> rawQuery(SqlStatement source);
 
-  /// Returns a helper for building SQL statements.
-  ///
-  /// ```
-  /// await client.table('person').insert({'name': 'Alan Turing'});
-  /// await client.table('person').deleteWhere({'name': 'Alan Turing'});
-  /// ```
-  SqlClientTableHelper table(String name) {
-    return SqlClientTableHelper._(this, name);
-  }
+
 }

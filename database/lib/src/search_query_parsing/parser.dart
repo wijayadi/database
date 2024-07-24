@@ -166,7 +166,7 @@ class SearchQueryParser {
   Filter _parseRangeFilter(SearchQueryParserState state) {
     // '[' or '{'
     final startIndex = state.index;
-    final isExclusiveMin = state.get(0).type == TokenType.leftCurlyBracket;
+    final isExclusiveMin = state.get(0)?.type == TokenType.leftCurlyBracket;
     state.advance();
     state.skipWhitespace();
 
@@ -178,12 +178,12 @@ class SearchQueryParser {
     final to = state.get(0);
     state.advance();
     state.skipWhitespace();
-    if (to.type != TokenType.string || to.value != 'TO') {
+    if (to?.type != TokenType.string || to?.value != 'TO') {
       // Go back and handle initial '[' / '{' as keyword
       state.index = startIndex;
-      final value = state.get(0).value;
+      final value = state.get(0)?.value;
       state.advance();
-      return KeywordFilter(value);
+      return KeywordFilter(value!);
     }
 
     // Max value
@@ -191,7 +191,7 @@ class SearchQueryParser {
     state.skipWhitespace();
 
     // ']' or '}'
-    final isExclusiveMax = state.get(0).type == TokenType.rightCurlyBracket;
+    final isExclusiveMax = state.get(0)?.type == TokenType.rightCurlyBracket;
     state.advance();
     state.skipWhitespace();
 
@@ -205,7 +205,7 @@ class SearchQueryParser {
 
   /// Parse a filter without attempting to handle operators like AND/OR after
   /// the filter.
-  Filter _parseSimpleFilter(SearchQueryParserState state) {
+  Filter? _parseSimpleFilter(SearchQueryParserState state) {
     state.skipWhitespace();
     final token = state.get(0);
     if (token == null) {
@@ -240,7 +240,7 @@ class SearchQueryParser {
 
       case TokenType.equal:
         state.advance();
-        return ValueFilter(_parseValue(state));
+        return ValueFilter(_parseValue(state)!);
 
       case TokenType.greaterThan:
         state.advance();
@@ -311,7 +311,7 @@ class SearchQueryParser {
   ///   * 3 --> 3
   ///   * 3.14 --> 3.14
   ///   * 2020-12-31 --> Date(2020, 12, 31)
-  Object _parseValue(SearchQueryParserState state, {bool supportStar = false}) {
+  Object? _parseValue(SearchQueryParserState state, {bool supportStar = false}) {
     // Skip whitespace before the token
     state.skipWhitespace();
 
@@ -323,9 +323,9 @@ class SearchQueryParser {
     state.skipWhitespace();
 
     // Interpret value
-    final value = token.value;
+    final value = token?.value;
 
-    if (token.type == TokenType.string) {
+    if (token?.type == TokenType.string) {
       // Special constant?
       switch (value) {
         case 'null':
@@ -343,7 +343,7 @@ class SearchQueryParser {
 
       // Int?
       {
-        final x = int.tryParse(value);
+        final x = int.tryParse(value!);
         if (x != null) {
           return x;
         }
@@ -399,7 +399,7 @@ class SearchQueryParserState {
   SearchQueryParserState(this.tokens);
 
   /// Discards the current token and moves to the next one.
-  Token advance() {
+  Token? advance() {
     final tokens = this.tokens;
     final index = this.index + 1;
     if (index >= tokens.length) {
@@ -411,7 +411,7 @@ class SearchQueryParserState {
   }
 
   /// Returns the token the index. Calling `get(0)` gives the current.
-  Token get(int i) {
+  Token? get(int i) {
     final tokens = this.tokens;
     final index = this.index + i;
     if (index < 0 || index >= tokens.length) {

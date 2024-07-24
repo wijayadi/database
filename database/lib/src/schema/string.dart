@@ -18,8 +18,8 @@ import 'package:database/schema.dart';
 class StringSchema extends PrimitiveSchema<String> {
   static const String nameForJson = 'string';
 
-  final int maxLengthInUtf8;
-  final int maxLengthInUtf16;
+  final int? maxLengthInUtf8;
+  final int? maxLengthInUtf16;
 
   const StringSchema({this.maxLengthInUtf8, this.maxLengthInUtf16});
 
@@ -39,17 +39,17 @@ class StringSchema extends PrimitiveSchema<String> {
       maxLengthInUtf16 == other.maxLengthInUtf16;
 
   @override
-  R acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
+  R? acceptVisitor<R, C>(SchemaVisitor<R, C> visitor, C context) {
     return visitor.visitStringSchema(this, context);
   }
 
   @override
-  bool isValidTree(Object argument, {List cycleDetectionStack}) {
+  bool isValidTree(Object? argument, {List? cycleDetectionStack}) {
     if (argument == null) {
       return true;
     }
     if (argument is String) {
-      if (maxLengthInUtf16 != null && argument.length > maxLengthInUtf16) {
+      if (maxLengthInUtf16 != null && argument.length > maxLengthInUtf16!) {
         return false;
       }
       return true;

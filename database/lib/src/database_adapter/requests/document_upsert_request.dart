@@ -20,17 +20,17 @@ import 'package:meta/meta.dart';
 /// A request to perform an upsert (insert or update).
 @sealed
 class DocumentUpsertRequest extends Request<Future<void>> {
-  final Transaction transaction;
+  final Transaction? transaction;
   final Document document;
-  final Map<String, Object> data;
-  final Reach reach;
-  Schema inputSchema;
+  final Map<String, Object?> data;
+  final Reach? reach;
+  Schema? inputSchema;
 
   DocumentUpsertRequest({
     this.transaction,
-    @required this.document,
-    @required this.data,
-    @required this.reach,
+    required this.document,
+    required this.data,
+    this.reach,
     this.inputSchema,
   });
 

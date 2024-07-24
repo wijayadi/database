@@ -19,7 +19,7 @@ import 'package:meta/meta.dart';
 
 @sealed
 class DocumentDeleteRequest extends Request<Future<void>> {
-  final Transaction transaction;
+  final Transaction? transaction;
   final Document document;
 
   /// If true, the database must check that the document actually exists.
@@ -27,15 +27,15 @@ class DocumentDeleteRequest extends Request<Future<void>> {
   /// [DatabaseException.notFound].
   final bool mustExist;
 
-  final Reach reach;
+  final Reach? reach;
 
-  Schema schema;
+  Schema? schema;
 
   DocumentDeleteRequest({
     this.transaction,
-    @required this.document,
-    @required this.mustExist,
-    @required this.reach,
+    required this.document,
+    required this.mustExist,
+    this.reach,
   });
 
   @override

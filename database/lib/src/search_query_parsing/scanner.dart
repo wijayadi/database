@@ -322,7 +322,7 @@ class ScannerState {
 
 /// Source used by [Scanner].
 class Source {
-  final Uri uri;
+  final Uri? uri;
   final int line;
   final int column;
   final String value;

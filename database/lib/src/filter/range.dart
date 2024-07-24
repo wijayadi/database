@@ -22,8 +22,8 @@ import 'package:database/filter.dart';
 /// final filter = RangeFilter(min:0.0, max:1.0, isExclusiveMax:true);
 /// ```
 class RangeFilter extends Filter {
-  final Object min;
-  final Object max;
+  final Object? min;
+  final Object? max;
   final bool isExclusiveMin;
   final bool isExclusiveMax;
 

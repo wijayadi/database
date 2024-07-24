@@ -112,7 +112,7 @@ class Date implements Comparable<Date> {
   }
 
   /// Parses a string with format '2020-12-31'. Returns null if parsing fails.
-  static Date tryParse(String s) {
+  static Date? tryParse(String s) {
     final i = s.indexOf('-');
     if (i < 0) {
       return null;
