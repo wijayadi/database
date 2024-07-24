@@ -181,7 +181,7 @@ abstract class SqlIterator {
     if (length != null && length <= 0) {
       throw ArgumentError.value(length, 'length');
     }
-    final rowBatch = await readBatchOfRows(length: length!);
+    final rowBatch = await readBatchOfRows(length: length);
     if (rowBatch == null) {
       return null;
     }
