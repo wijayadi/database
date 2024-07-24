@@ -40,12 +40,12 @@ abstract class SqlIterator {
   /// batch-returning function.
   factory SqlIterator.fromFunction({
     required List<SqlColumnDescription> columnDescriptions,
-    required Future<List<List<Object>>?> Function({int? length}) onNextRowBatch,
+    required Future<List<List<Object?>>?> Function({int? length}) onNextRowBatch,
   }) = _SqlQueryResultWithFunction;
 
   factory SqlIterator.fromLists({
     required List<SqlColumnDescription> columnDescriptions,
-    List<List<Object>>? rows,
+    List<List<Object?>>? rows,
   }) {
     if (rows != null && rows.isEmpty) {
       rows = null;
@@ -70,7 +70,7 @@ abstract class SqlIterator {
 
   /// Constructs a database iterator from in-memory [Iterable].
   factory SqlIterator.fromMaps(
-    Iterable<Map<String, Object>> maps, {
+    Iterable<Map<String, Object?>> maps, {
     List<SqlColumnDescription>? columnDescriptions,
   }) {
     if (columnDescriptions == null) {
@@ -86,12 +86,20 @@ abstract class SqlIterator {
       columnDescriptions = columnDescriptionsSet.toList(growable: false);
       columnDescriptions.sort();
     }
-    final rows = maps.map((map) {
-      return columnDescriptions!.map((columnDescription) {
-        return map[columnDescription.columnName] ??
-            map['${columnDescription.tableName}.${columnDescription.columnName}']!;
-      }).toList(growable: false);
-    }).toList(growable: false);
+    var rows = <List<Object?>>[];
+    for (var map in maps) {
+      // var row = map.values.toList();
+      var row = <Object?>[];
+      for (var column in columnDescriptions) {
+        if (map.containsKey(column.columnName)) {
+          row.add(map[column.columnName]);
+        } else if (map.containsKey('${column.tableName}.${column.columnName}')) {
+          row.add(map['${column.tableName}.${column.columnName}']);
+        }
+      }
+      rows.add(row);
+    }
+
     return SqlIterator.fromLists(
       columnDescriptions: columnDescriptions,
       rows: rows,
@@ -177,7 +185,7 @@ abstract class SqlIterator {
   ///
   /// The length is optional. If non-null, it must be greater than 0. The
   /// returned list will never be longer than the specified length.
-  Future<List<Map<String, Object>>?> readBatchOfMaps({int? length}) async {
+  Future<List<Map<String, Object?>>?> readBatchOfMaps({int? length}) async {
     if (length != null && length <= 0) {
       throw ArgumentError.value(length, 'length');
     }
@@ -185,8 +193,8 @@ abstract class SqlIterator {
     if (rowBatch == null) {
       return null;
     }
-    return List<Map<String, Object>>.unmodifiable(rowBatch.map((row) {
-      final result = <String, Object>{};
+    return List<Map<String, Object?>>.unmodifiable(rowBatch.map((row) {
+      final result = <String, Object?>{};
       for (var i = 0; i < row.length; i++) {
         result[columnDescriptions[i]?.columnName ?? '$i'] = row[i];
       }
@@ -201,10 +209,10 @@ abstract class SqlIterator {
   ///
   /// The length is optional. If non-null, it must be greater than 0. The
   /// returned list will never be longer than the specified length.
-  Future<List<List<Object>>?> readBatchOfRows({int? length});
+  Future<List<List<Object?>>?> readBatchOfRows({int? length});
 
   /// Reads all remaining rows as a stream of maps. Each row is immutable.
-  Stream<Map<String, Object>> readMapStream() async* {
+  Stream<Map<String, Object?>> readMapStream() async* {
     while (true) {
       final batch = await readBatchOfMaps();
       if (batch == null) {
@@ -217,7 +225,7 @@ abstract class SqlIterator {
   }
 
   /// Reads all remaining rows as a stream of lists. Each row is immutable.
-  Stream<List<Object>> readRowStream() async* {
+  Stream<List<Object?>> readRowStream() async* {
     while (true) {
       final batch = await readBatchOfRows();
       if (batch == null) {
@@ -230,12 +238,12 @@ abstract class SqlIterator {
   }
 
   /// Reads all remaining rows as maps. The result is immutable.
-  Future<List<Map<String, Object>>> toMaps() async {
-    final result = <Map<String, Object>>[];
+  Future<List<Map<String, Object?>>> toMaps() async {
+    final result = <Map<String, Object?>>[];
     while (true) {
       final batch = await readBatchOfMaps();
       if (batch == null) {
-        return List<Map<String, Object>>.unmodifiable(result);
+        return List<Map<String, Object?>>.unmodifiable(result);
       }
       result.addAll(batch);
     }
@@ -258,7 +266,7 @@ class _SqlQueryResultWithFunction extends SqlIterator {
   @override
   final List<SqlColumnDescription> columnDescriptions;
 
-  final Future<List<List<Object>>?> Function({int? length}) onNextRowBatch;
+  final Future<List<List<Object?>>?> Function({int? length}) onNextRowBatch;
 
   _SqlQueryResultWithFunction({
     required this.columnDescriptions,
@@ -266,7 +274,7 @@ class _SqlQueryResultWithFunction extends SqlIterator {
   }) : super.constructor();
 
   @override
-  Future<List<List<Object>>?> readBatchOfRows({int? length}) async {
+  Future<List<List<Object?>>?> readBatchOfRows({int? length}) async {
     if (length != null && length <= 0) {
       throw ArgumentError.value(length, 'length');
     }

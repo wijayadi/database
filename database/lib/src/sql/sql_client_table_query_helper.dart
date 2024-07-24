@@ -32,13 +32,13 @@ class SqlClientTableQueryHelper {
   }
 
   /// Returns results as a list of maps.
-  Future<List<Map<String, Object>>> toMaps() async {
+  Future<List<Map<String, Object?>>> toMaps() async {
     final response = await _sqlClient.rawQuery(_sqlStatement);
     return response.toMaps();
   }
 
   /// Returns results as a stream of maps.
-  Stream<Map<String, Object>> toMapsStream() async* {
+  Stream<Map<String, Object?>> toMapsStream() async* {
     final response = await _sqlClient.rawQuery(_sqlStatement);
     yield* (response.readMapStream());
   }
@@ -50,7 +50,7 @@ class SqlClientTableQueryHelper {
   }
 
   /// Returns results as a stream of rows.
-  Stream<List<Object>> toRowsStream() async* {
+  Stream<List<Object?>> toRowsStream() async* {
     final response = await _sqlClient.rawQuery(_sqlStatement);
     yield* (response.readRowStream());
   }
