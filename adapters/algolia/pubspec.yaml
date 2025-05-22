@@ -4,7 +4,7 @@ description: An adapter for connecting 'package:database' to Algolia. Works in a
 homepage: https://github.com/dint-dev/database
 
 environment:
-  sdk: '>=2.6.0 <3.7.0'
+  sdk: '>=2.6.0 <4.0.0'
 
 dependencies:
   database: ^0.3.2

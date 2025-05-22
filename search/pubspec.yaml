@@ -6,7 +6,7 @@ description:
 homepage: https://github.com/dint-dev/database
 
 environment:
-  sdk: '>=2.6.0 <3.7.0'
+  sdk: '>=2.6.0 <4.0.0'
 
 dependencies:
   charcode: ^1.1.0

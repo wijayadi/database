@@ -4,7 +4,7 @@ description: An adapter for using 'package:database' API with a PostgreSQL datab
 homepage: https://github.com/dint-dev/database
 
 environment:
-  sdk: '>=2.6.0 <3.7.0'
+  sdk: '>=2.6.0 <4.0.0'
 
 dependencies:
   collection: ^1.14.0
